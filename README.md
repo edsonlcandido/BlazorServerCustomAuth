@@ -1,7 +1,7 @@
 # BlazorAppCutomAuth
 
-Estudo de autenticaÁ„o customizada no Blazor, a partir do manual da Microsoft.
+Estudo de autentica√ß√£o customizada no Blazor, a partir do manual da Microsoft.
 
-[] - [Vis„o geral] (https://learn.microsoft.com/pt-br/aspnet/core/security/?view=aspnetcore-7.0)
+[ ] - [Vis√£o geral] (https://learn.microsoft.com/pt-br/aspnet/core/security/?view=aspnetcore-7.0)
 
-[] - [AutenticaÁ„o] (https://learn.microsoft.com/pt-br/aspnet/core/blazor/security/?view=aspnetcore-7.0)]
+[ ] - [Autentica√ß√£o] (https://learn.microsoft.com/pt-br/aspnet/core/blazor/security/?view=aspnetcore-7.0)]
