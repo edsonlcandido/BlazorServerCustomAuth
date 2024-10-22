@@ -1,4 +1,4 @@
-namespace BlazorAppCutomAuth.Data
+namespace BlazorServerCustomAuth.Data
 {
     public class WeatherForecastService
     {

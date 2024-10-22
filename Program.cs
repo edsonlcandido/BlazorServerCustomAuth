@@ -1,8 +1,8 @@
-using BlazorAppCutomAuth.Data;
+using BlazorServerCustomAuth.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace BlazorAppCutomAuth
+namespace BlazorServerCustomAuth
 {
     public class Program
     {
