@@ -6,6 +6,7 @@
 @using Microsoft.AspNetCore.Authentication.Cookies
 @inject NavigationManager navigationManager
 @inject ExternalAuthService externalAuthService
+@inject IHttpContextAccessor HttpContextAccessor
 
 <h3>Login</h3>
 
@@ -24,8 +25,14 @@
 </EditForm>
 
 @code {
+    [CascadingParameter(Name = "AccessToken")]
+    public string AccessToken { get; set; }
+
     [CascadingParameter]
-    public HttpContext httpContext{ get; set;  }
+    private Task<AuthenticationState>? authenticationStateTask { get; set; }
+
+    [CascadingParameter]
+    public HttpContext? httpContext { get; set; }
 
     private LoginRequest Model = new LoginRequest();
     private string? errorMessage;
@@ -40,10 +47,12 @@
             new Claim(ClaimTypes.Email, LoginResponse.User.Email),
             new Claim(ClaimTypes.Role, LoginResponse.User.Role),
         };
-
         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-        await httpContext.SignInAsync(claimsPrincipal);
+        //AccessToken;
+        // httpContext = HttpContextAccessor.HttpContext;
+        // await httpContext.SignInAsync(claimsPrincipal);
+        //HttpContextAccessor.HttpContext.User = claimsPrincipal;
         navigationManager.NavigateTo("/");
     }
 }

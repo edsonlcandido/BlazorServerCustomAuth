@@ -23,8 +23,11 @@ namespace BlazorServerCustomAuth
                     options.AccessDeniedPath = "/access-denied";
                 });
             builder.Services.AddAuthorization();
+            builder.Services.AddHttpClient();
             builder.Services.AddSingleton<WeatherForecastService>();
-            builder.Services.AddSingleton<HttpContext>();
+            //builder.Services.AddSingleton<HttpContext>();
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddScoped<ExternalAuthService>();
 
             var app = builder.Build();
