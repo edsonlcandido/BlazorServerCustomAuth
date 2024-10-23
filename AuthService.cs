@@ -1,13 +1,15 @@
-﻿namespace BlazorServerCustomAuth
+﻿using BlazorServerCustomAuth.Requests;
+
+namespace BlazorServerCustomAuth
 {
     public class ExternalAuthService
     {
         public bool IsAuthenticated { get; private set; }
 
-        public async Task<LoginResponse> Login()
+        public async Task<LoginResponse> Login(LoginRequest loginRequest)
         {
             IsAuthenticated = true;
-            await Task.Delay(1000);
+            await Task.Delay(500);
             return new LoginResponse()
             {
                 Token = "12345698",

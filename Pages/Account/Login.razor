@@ -1,12 +1,17 @@
 ﻿@page "/login"
+
 @using System.Security.Claims
+@using BlazorServerCustomAuth.Requests
 @using Microsoft.AspNetCore.Authentication
 @using Microsoft.AspNetCore.Authentication.Cookies
-@inject NavigationManager NavigationManager
-@inject ExternalAuthService AuthService
+@inject NavigationManager navigationManager
+@inject ExternalAuthService externalAuthService
+
 <h3>Login</h3>
 
-<EditForm Model="Model" OnInvalidSubmit="Autenticate">
+<EditForm Model="Model" OnSubmit="Autenticate">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
     <div class="form-group">
         <label for="Email">Email</label>
         <InputText id="Email" class="form-control" @bind-Value="Model.Email" />
@@ -20,14 +25,14 @@
 
 @code {
     [CascadingParameter]
-    public HttpContext? httpContext{ get; set;  }
+    public HttpContext httpContext{ get; set;  }
+
     private LoginRequest Model = new LoginRequest();
     private string? errorMessage;
 
     private async Task Autenticate()
     {
- 
-        var  LoginResponse = await AuthService.Login();
+        var LoginResponse = await externalAuthService.Login(Model);
 
         var claims = new List<Claim>
         {
@@ -38,13 +43,7 @@
 
         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-        await httpContext?.SignInAsync(claimsPrincipal);
-        NavigationManager.NavigateTo("/");
-    }
-
-    class LoginRequest
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
+        await httpContext.SignInAsync(claimsPrincipal);
+        navigationManager.NavigateTo("/");
     }
 }

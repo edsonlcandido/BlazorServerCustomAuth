@@ -22,8 +22,10 @@ namespace BlazorServerCustomAuth
                     options.Cookie.MaxAge = TimeSpan.FromMinutes(30);
                     options.AccessDeniedPath = "/access-denied";
                 });
+            builder.Services.AddAuthorization();
             builder.Services.AddSingleton<WeatherForecastService>();
-            builder.Services.AddSingleton<ExternalAuthService>();
+            builder.Services.AddSingleton<HttpContext>();
+            builder.Services.AddScoped<ExternalAuthService>();
 
             var app = builder.Build();
 
