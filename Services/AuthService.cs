@@ -1,7 +1,7 @@
 ﻿using BlazorServerCustomAuth.Requests;
 using Microsoft.AspNetCore.Components;
 
-namespace BlazorServerCustomAuth
+namespace BlazorServerCustomAuth.Services
 {
     public class ExternalAuthService
     {

@@ -1,12 +1,14 @@
 ﻿@page "/login"
 
 @using System.Security.Claims
+@using BlazorServerCustomAuth.Providers
 @using BlazorServerCustomAuth.Requests
+@using BlazorServerCustomAuth.Services
 @using Microsoft.AspNetCore.Authentication
 @using Microsoft.AspNetCore.Authentication.Cookies
 @inject NavigationManager navigationManager
 @inject ExternalAuthService externalAuthService
-@inject IHttpContextAccessor HttpContextAccessor
+@inject CustomAuthenticationStateProvider  CustomAuthenticationState
 
 <h3>Login</h3>
 
@@ -25,9 +27,6 @@
 </EditForm>
 
 @code {
-    [CascadingParameter(Name = "AccessToken")]
-    public string AccessToken { get; set; }
-
     [CascadingParameter]
     private Task<AuthenticationState>? authenticationStateTask { get; set; }
 
@@ -39,20 +38,9 @@
 
     private async Task Autenticate()
     {
-        var LoginResponse = await externalAuthService.Login(Model);
 
-        var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, LoginResponse.User.Name),
-            new Claim(ClaimTypes.Email, LoginResponse.User.Email),
-            new Claim(ClaimTypes.Role, LoginResponse.User.Role),
-        };
-        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-        //AccessToken;
-        // httpContext = HttpContextAccessor.HttpContext;
-        // await httpContext.SignInAsync(claimsPrincipal);
-        //HttpContextAccessor.HttpContext.User = claimsPrincipal;
+        await CustomAuthenticationState.LoginAsync(Model);
+
         navigationManager.NavigateTo("/");
     }
 }

@@ -1,4 +1,7 @@
 ﻿@page "/"
+@inject CustomAuthenticationStateProvider AuthenticationStateProvider
+
+<AuthenticationInitializer />
 
 <PageTitle>Index</PageTitle>
 
@@ -12,5 +15,11 @@ Welcome to your new app.
     </Authorized>
 </AuthorizeView>
 @code{
+    [CascadingParameter]
+    private Task<AuthenticationState>? authenticationStateTask { get; set; }
 
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
 }
