@@ -1,4 +1,23 @@
 ﻿@page "/access-denied"
+@using Microsoft.AspNetCore.Authentication
+@inject NavigationManager NavigationManager
+@inject CustomAuthenticationStateProvider CustomAuthenticationStateProvider
 <h3>AccesDenied</h3>
-Você não tem permissão para acessa essa pagina
+Você não tem permissão para acessa essa pagina.<br/>
+Deslogando da aplicação ...
 
+@code{
+    [CascadingParameter]
+    private Task<AuthenticationState>? authenticationStateTask { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool fisrtRun)
+    {
+        if (fisrtRun)
+        {
+            await CustomAuthenticationStateProvider.LogoutAsync();
+            await Task.Delay(500);
+            NavigationManager.NavigateTo("/");
+        }
+        
+    }
+}
