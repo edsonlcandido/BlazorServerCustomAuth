@@ -30,5 +30,10 @@ namespace BlazorServerCustomAuth.Services
             }
             return JsonSerializer.Deserialize<LoginResponse>(userJson);
         }
+
+        internal async Task ClearUserFromBrowserAsync()
+        {
+            await _protectedLocalStorage.DeleteAsync(_key);
+        }
     }
 }

@@ -74,5 +74,11 @@ namespace BlazorServerCustomAuth.Providers
                 NotifyAuthenticationStateChanged(Task.FromResult(_authenticationState));
             }
         }
+        public async Task LogoutAsync()
+        {
+            await _localStorageService.ClearUserFromBrowserAsync();
+            _authenticationState = new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+            NotifyAuthenticationStateChanged(Task.FromResult(_authenticationState));
+        }
     }
 }
