@@ -2,6 +2,7 @@ using BlazorServerCustomAuth.Data;
 using BlazorServerCustomAuth.Midlewares;
 using BlazorServerCustomAuth.Providers;
 using BlazorServerCustomAuth.Services;
+using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -15,6 +16,9 @@ namespace BlazorServerCustomAuth
     {
         public static void Main(string[] args)
         {
+            //Env.Load();
+            //var baseUrl = Env.GetString("BACKEND_URI");
+
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
@@ -28,13 +32,16 @@ namespace BlazorServerCustomAuth
                     options.Cookie.MaxAge = TimeSpan.FromMinutes(30);
                     options.AccessDeniedPath = "/access-denied";
                 });
-            
-            builder.Services.AddHttpClient();
+
             builder.Services.AddSingleton<WeatherForecastService>();
             //builder.Services.AddSingleton<HttpContext>();
             //builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //builder.Services.AddHttpContextAccessor();
             builder.Services.AddScoped<ExternalAuthService>();
+            builder.Services.AddScoped(sp => new HttpClient
+            {
+                BaseAddress = new ("https://api.edsonluizcandido.com.br")
+            });
             builder.Services.AddScoped<LocalStorageService>();
             builder.Services.AddScoped<CustomAuthenticationStateProvider>();
             builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<CustomAuthenticationStateProvider>());
