@@ -11,17 +11,19 @@
 @inject CustomAuthenticationStateProvider  CustomAuthenticationState
 
 <h3>Login</h3>
-<p>
-O sistema usa uma api externa com o pocketbase, temos dois usuários.
-</p>
-<p>
-usuário: edinho_general<br/>
-senha: 12qw!@QW
-</p>
-<p>
-usuário: edinho_adm<br/>
-senha: 12qw!@QW
-</p>
+<div>
+    <p>
+    O sistema usa uma api externa com o pocketbase, temos dois usuários.
+    </p>
+    <p>
+    usuário: edinho_general<br/>
+    senha: 12qw!@QW
+    </p>
+    <p>
+    usuário: edinho_adm<br/>
+    senha: 12qw!@QW
+    </p>
+</div>
 <EditForm Model="Model" OnSubmit="Autenticate">
     <DataAnnotationsValidator />
     <ValidationSummary />
